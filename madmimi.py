@@ -291,6 +291,11 @@ class MadMimi(object):
 
         self._post(url, email=email)
 
+    def update_email(self, old_email, new_email):
+        url = 'audience_members/%s/update_email' % quote(old_email)
+
+        self._post(url, new_email=new_email)
+
     def subscriptions(self, email, as_xml=False):
         """Get an audience member's current subscriptions.
 
