@@ -276,7 +276,7 @@ class MadMimi(object):
 
         self._post(url, email=email)
 
-    def unsubscribe(self, email, audience_list):
+    def unsubscribe(self, email, audience_list=None):
         """Remove an audience member from an audience list.
 
         Arguments:
@@ -286,8 +286,10 @@ class MadMimi(object):
         Returns:
             Nothing. The API doesn't provide a response.
         """
-
-        url = 'audience_lists/%s/remove' % quote(audience_list)
+        if audience_list:
+            url = 'audience_lists/%s/remove' % quote(audience_list)
+        else:
+            url = 'audience_lists/remove_all'
 
         self._post(url, email=email)
 
@@ -392,6 +394,17 @@ class MadMimi(object):
 
         return self._get(url, is_secure=True)
 
+    def supress_email(self, email):
+        """Suppresses email (unsubscribes)
+
+        Arguments:
+            email: Email address to unsubscribe.
+        """
+
+        url = '/audience_members/%s/suppress_email' % email
+
+        return self._post(url)
+    
     def supressed_since(self, date):
         """Get a list of email addresses that have opted out since date.
 
